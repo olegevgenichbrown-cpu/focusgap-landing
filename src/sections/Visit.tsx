@@ -148,16 +148,16 @@ const Visit = () => {
       {/* Info Cards Grid */}
       <div
         ref={cardsRef}
-        className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+        className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6"
       >
         {visitConfig.infoCards.map((card, i) => {
           const IconComponent = iconMap[card.icon];
           return (
-            <div key={i} className="info-card p-8 border border-white/10 hover:border-white/20 transition-colors">
-              {IconComponent && <IconComponent className="w-8 h-8 text-white/50 mb-6" strokeWidth={1.5} />}
-              <h3 className="museo-headline text-white text-xl mb-3">{card.title}</h3>
+            <div key={i} className="info-card p-5 md:p-8 border border-white/10 hover:border-white/20 transition-colors">
+              {IconComponent && <IconComponent className="w-6 h-6 md:w-8 md:h-8 text-white/50 mb-4 md:mb-6" strokeWidth={1.5} />}
+              <h3 className="museo-headline text-white text-base md:text-xl mb-2 md:mb-3">{card.title}</h3>
               <div
-                className="museo-body text-white/60 text-sm"
+                className="museo-body text-white/60 text-xs md:text-sm"
                 dangerouslySetInnerHTML={{ __html: card.content }}
               />
             </div>

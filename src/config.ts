@@ -1,4 +1,4 @@
-// FocusGap Pre-Launch Site Configuration
+﻿// FocusGap Pre-Launch Site Configuration
 // Kickstarter campaign landing page for modular desk organization system
 
 export interface SiteConfig {
@@ -232,10 +232,10 @@ export const heroConfig: HeroConfig = {
   badge: "Coming to Kickstarter",
   since: "2025",
   email: "hello@focusgap.co",
-  heroImage: "/images/hero-premium.png",
+  heroImage: "/images/hero-premium.jpg",
   heroImageAlt: "FocusGap Modular Desk System - Complete Setup",
   scrollText: "Scroll to explore",
-  copyrightText: "© 2025 FocusGap",
+  copyrightText: "В© 2025 FocusGap",
   navLinks: [
     { label: "Mission", href: "#mission" },
     { label: "Specs", href: "#specs" },
@@ -254,7 +254,7 @@ export const heroConfig: HeroConfig = {
 export const aboutConfig: AboutConfig = {
   label: "Our Mission",
   headline: "Crafting Focus, One Module at a Time",
-  description: "In a world of constant distractions, we believe your workspace should be a sanctuary of clarity. FocusGap combines premium materials—aircraft-grade aluminum and sustainable walnut—with intelligent design to create a modular system that adapts to your workflow. Every element is engineered to eliminate friction, from the magnetic connections to the integrated CO2 sensor that ensures your air quality supports deep work.",
+  description: "In a world of constant distractions, we believe your workspace should be a sanctuary of clarity. FocusGap combines premium materialsвЂ”aircraft-grade aluminum and sustainable walnutвЂ”with intelligent design to create a modular system that adapts to your workflow. Every element is engineered to eliminate friction, from the magnetic connections to the integrated CO2 sensor that ensures your air quality supports deep work.",
   bottomText: "We're not just building desk accessories. We're architecting the environment where your best ideas come to life.",
   galleryImages: [
     { src: "/videos/component1.mp4", alt: "FocusGap Component 1", label: "Component 1", type: "video" },
@@ -281,25 +281,25 @@ export const exhibitionsConfig: ExhibitionsConfig = {
     {
       id: 1,
       title: "Research & Ideation",
-      image: "/images/image(8).png",
+      image: "/images/image(8).jpg",
       date: "Phase 01",
     },
     {
       id: 2,
       title: "Material Selection",
-      image: "/images/image(9).png",
+      image: "/images/image(9).jpg",
       date: "Phase 02",
     },
     {
       id: 3,
       title: "Prototype Testing",
-      image: "/images/image(3).png",
+      image: "/images/image(3).jpg",
       date: "Phase 03",
     },
     {
       id: 4,
       title: "Final Production",
-      image: "/images/image(7).png",
+      image: "/images/image(7).jpg",
       date: "Phase 04",
     },
   ],
@@ -316,38 +316,38 @@ export const collectionsConfig: CollectionsConfig = {
       title: "Air Monitor Hub",
       year: "Core Module",
       description: "Integrated CO2 sensor with real-time air quality display. Know when to ventilate for optimal cognitive performance.",
-      image: "/images/image(4).png",
+      image: "/images/image(4).jpg",
     },
     {
       id: 2,
       title: "Wireless Charging Base",
       year: "Power Module",
       description: "15W fast wireless charging with premium walnut surface. Keep your devices powered without cable clutter.",
-      image: "/images/image(5).png",
+      image: "/images/image(5).jpg",
     },
     {
       id: 3,
       title: "Headphone Stand",
       year: "Accessory",
       description: "Elegant vertical stand with soft-touch aluminum and walnut accent. Protects your headphones in style.",
-      image: "/images/image(3).png",
+      image: "/images/image(3).jpg",
     },
     {
       id: 4,
       title: "Laptop Vertical Dock",
       year: "Space Saver",
       description: "Maximize desk space with vertical laptop storage. Precision-fit for MacBook and premium ultrabooks.",
-      image: "/images/image(10).png",
+      image: "/images/image(10).jpg",
     },
   ],
 };
 
 // Team/Testimonial Section
 export const testimonialsConfig: TestimonialsConfig = {
-  quote: "We started FocusGap because we were tired of desk organizers that looked like afterthoughts. Our goal was to create something that feels as intentional as the work you do—where every material choice, every magnet, every sensor serves a purpose. This isn't just about organizing your desk. It's about designing the space where focus happens.",
+  quote: "We started FocusGap because we were tired of desk organizers that looked like afterthoughts. Our goal was to create something that feels as intentional as the work you doвЂ”where every material choice, every magnet, every sensor serves a purpose. This isn't just about organizing your desk. It's about designing the space where focus happens.",
   authorName: "The FocusGap Team",
   authorTitle: "Designers & Engineers",
-  authorImage: "/images/image(2).png",
+  authorImage: "/images/image(2).jpg",
 };
 
 // Waitlist/Contact Section
@@ -401,7 +401,7 @@ export const manufacturingConfig: ManufacturingConfig = {
     {
       title: "Quality Control",
       description: "Every module undergoes rigorous inspection to ensure flawless performance and durability.",
-      gif: "/images/manufacturing-qc.png",
+      gif: "/images/manufacturing-qc.jpg",
       icon: "CheckCircle",
     },
   ],
@@ -451,13 +451,13 @@ export const specsConfig: SpecsConfig = {
   label: "Technical Specs",
   headline: "Engineered to Perfection",
   description: "Every detail meticulously crafted for performance, durability, and aesthetic excellence.",
-  image: "/images/picture.png",
+  image: "/images/picture.jpg",
   specs: [
-    { icon: "Ruler", label: "Dimensions", value: "240 × 120 × 45 mm" },
+    { icon: "Ruler", label: "Dimensions", value: "240 Г— 120 Г— 45 mm" },
     { icon: "Weight", label: "Weight", value: "1.2 kg (base module)" },
     { icon: "Battery", label: "Power", value: "USB-C, 15W output" },
     { icon: "Wifi", label: "Connectivity", value: "Bluetooth 5.2" },
-    { icon: "Wind", label: "CO2 Sensor", value: "NDIR, ±50ppm accuracy" },
+    { icon: "Wind", label: "CO2 Sensor", value: "NDIR, В±50ppm accuracy" },
     { icon: "Layers", label: "Materials", value: "6061 Al + Walnut" },
   ],
 };
@@ -466,7 +466,7 @@ export const specsConfig: SpecsConfig = {
 export const timelineConfig: TimelineConfig = {
   label: "Roadmap",
   headline: "Our Journey",
-  description: "From concept to your desk—follow our progress.",
+  description: "From concept to your deskвЂ”follow our progress.",
   milestones: [
     {
       title: "Concept & Design",
@@ -522,7 +522,7 @@ export const faqConfig: FAQConfig = {
     },
     {
       question: "Is the CO2 sensor accurate?",
-      answer: "Yes! Our NDIR (Non-Dispersive Infrared) sensor provides ±50ppm accuracy, calibrated to detect CO2 levels from 400 to 5000ppm. It updates every 2 seconds for real-time monitoring.",
+      answer: "Yes! Our NDIR (Non-Dispersive Infrared) sensor provides В±50ppm accuracy, calibrated to detect CO2 levels from 400 to 5000ppm. It updates every 2 seconds for real-time monitoring.",
     },
     {
       question: "Can I buy individual modules?",
@@ -596,7 +596,7 @@ export const pricingConfig: PricingConfig = {
 
 // Footer Configuration
 export const footerConfig: FooterConfig = {
-  marqueeText: "FOCUSGAP • MODULAR DESK SYSTEM • COMING TO KICKSTARTER • JOIN THE WAITLIST • PREMIUM ALUMINUM & WALNUT • CO2 MONITORING • WIRELESS CHARGING • ",
+  marqueeText: "FOCUSGAP вЂў MODULAR DESK SYSTEM вЂў COMING TO KICKSTARTER вЂў JOIN THE WAITLIST вЂў PREMIUM ALUMINUM & WALNUT вЂў CO2 MONITORING вЂў WIRELESS CHARGING вЂў ",
   brandName: "FOCUSGAP",
   brandDescription: "Premium modular desk organization system. Crafted from aircraft-grade aluminum and sustainable walnut. Designed for deep work.",
   socialLinks: [

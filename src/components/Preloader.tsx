@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import { gsap } from 'gsap';
 
 interface PreloaderProps {
   onComplete: () => void;
@@ -7,55 +6,29 @@ interface PreloaderProps {
 
 const Preloader = ({ onComplete }: PreloaderProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const logoRef = useRef<HTMLDivElement>(null);
-  const lineTopRef = useRef<HTMLDivElement>(null);
-  const lineBottomRef = useRef<HTMLDivElement>(null);
-  const progressRef = useRef<HTMLDivElement>(null);
-  const [progress, setProgress] = useState(0);
+  const [showVideo, setShowVideo] = useState(false);
 
   useEffect(() => {
-    const container = containerRef.current;
-    const logo = logoRef.current;
-    const lineTop = lineTopRef.current;
-    const lineBottom = lineBottomRef.current;
-    const progressBar = progressRef.current;
+    // Delay video start to prevent jank on first frames
+    const videoTimer = setTimeout(() => {
+      setShowVideo(true);
+    }, 300); // 300ms delay for smooth initial render
 
-    if (!container || !logo || !lineTop || !lineBottom || !progressBar) return;
-
-    const tl = gsap.timeline();
-
-    // Initial states
-    gsap.set(lineTop, { scaleX: 0 });
-    gsap.set(lineBottom, { scaleX: 0 });
-    gsap.set(logo, { opacity: 0, y: 30 });
-    gsap.set(progressBar, { scaleX: 0 });
-
-    // Animation sequence
-    tl.to(lineTop, { scaleX: 1, duration: 0.8, ease: 'power3.inOut' })
-      .to(lineBottom, { scaleX: 1, duration: 0.8, ease: 'power3.inOut' }, '-=0.6')
-      .to(logo, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '-=0.4');
-
-    // Progress bar animation
-    gsap.to(progressBar, {
-      scaleX: 1,
-      duration: 3,
-      ease: 'power2.inOut',
-      onUpdate: function() {
-        setProgress(Math.round(this.progress() * 100));
-      },
-      onComplete: () => {
-        // Exit animation
-        gsap.to(container, {
-          yPercent: -100,
-          duration: 0.8,
-          ease: 'power4.inOut',
-          onComplete,
-        });
-      }
-    });
+    // Exit timer
+    const exitTimer = setTimeout(() => {
+      const container = containerRef.current;
+      if (!container) return;
+      
+      container.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      container.style.opacity = '0';
+      container.style.transform = 'translateY(-30px)';
+      
+      setTimeout(onComplete, 600);
+    }, 2800);
 
     return () => {
-      tl.kill();
+      clearTimeout(videoTimer);
+      clearTimeout(exitTimer);
     };
   }, [onComplete]);
 
@@ -63,53 +36,95 @@ const Preloader = ({ onComplete }: PreloaderProps) => {
     <div
       ref={containerRef}
       className="fixed inset-0 z-[9999] bg-[#050505] flex flex-col items-center justify-center"
+      style={{ 
+        willChange: 'transform, opacity',
+        backfaceVisibility: 'hidden'
+      }}
     >
-      {/* Background Video */}
-      <video
-        src="/videos/prehero.mp4"
-        autoPlay
-        muted
-        loop
-        playsInline
-        className="absolute inset-0 w-full h-full object-cover opacity-30"
+      {/* Static background (instant) */}
+      <div 
+        className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] via-[#050505] to-[#0a0a0a]"
       />
       
-      {/* Top line */}
-      <div
-        ref={lineTopRef}
-        className="absolute top-0 left-0 w-full h-px bg-white/20 origin-left"
-      />
-
-      {/* Logo */}
-      <div ref={logoRef} className="flex flex-col items-center">
-        <div className="flex items-center gap-1">
-          <span className="museo-headline text-white text-6xl md:text-8xl tracking-tight">FOCUS</span>
-          <span className="museo-headline text-white/30 text-6xl md:text-8xl">/</span>
-          <span className="museo-headline text-white text-6xl md:text-8xl tracking-tight">GAP</span>
+      {/* Video loads after 300ms */}
+      {showVideo && (
+        <video
+          src="/videos/prehero.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          className="absolute inset-0 w-full h-full object-cover animate-fadeIn"
+          style={{ 
+            opacity: 0.3,
+            transform: 'translateZ(0)',
+            willChange: 'opacity'
+          }}
+        />
+      )}
+      
+      {/* Content - always visible immediately */}
+      <div className="relative z-10 text-center">
+        {/* Logo */}
+        <div className="flex items-center gap-1 animate-fadeInUp">
+          <span className="text-white text-6xl md:text-8xl font-semibold tracking-tight">
+            FOCUS
+          </span>
+          <span className="text-white/30 text-6xl md:text-8xl">/</span>
+          <span className="text-white text-6xl md:text-8xl font-semibold tracking-tight">
+            GAP
+          </span>
         </div>
-        <p className="museo-label text-white/40 text-xs tracking-[0.4em] uppercase mt-6">
+        
+        <p className="text-white/40 text-xs tracking-[0.4em] uppercase mt-6 animate-fadeInDelay">
           Modular Desk System
         </p>
-      </div>
-
-      {/* Progress */}
-      <div className="absolute bottom-16 left-1/2 -translate-x-1/2 w-48">
-        <div className="h-px bg-white/10 overflow-hidden">
-          <div
-            ref={progressRef}
-            className="h-full bg-white origin-left"
-          />
+        
+        {/* Progress bar */}
+        <div className="mt-8 w-48 h-px bg-white/10 overflow-hidden mx-auto rounded-full">
+          <div className="h-full bg-white animate-progress" />
         </div>
-        <p className="museo-label text-white/30 text-xs text-center mt-4 tracking-widest">
-          {progress}%
-        </p>
       </div>
 
-      {/* Bottom line */}
-      <div
-        ref={lineBottomRef}
-        className="absolute bottom-0 left-0 w-full h-px bg-white/20 origin-left"
-      />
+      <style>{`
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        @keyframes fadeInUp {
+          from { 
+            opacity: 0; 
+            transform: translateY(30px);
+          }
+          to { 
+            opacity: 1; 
+            transform: translateY(0);
+          }
+        }
+        @keyframes fadeInDelay {
+          0% { opacity: 0; }
+          50% { opacity: 0; }
+          100% { opacity: 1; }
+        }
+        @keyframes progress {
+          from { transform: scaleX(0); }
+          to { transform: scaleX(1); }
+        }
+        .animate-fadeIn {
+          animation: fadeIn 0.8s ease forwards;
+        }
+        .animate-fadeInUp {
+          animation: fadeInUp 0.6s ease-out forwards;
+        }
+        .animate-fadeInDelay {
+          animation: fadeInDelay 1s ease-out forwards;
+        }
+        .animate-progress {
+          animation: progress 2.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+          transform-origin: left;
+        }
+      `}</style>
     </div>
   );
 };

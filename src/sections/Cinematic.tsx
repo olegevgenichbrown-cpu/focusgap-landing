@@ -77,13 +77,24 @@ const Cinematic = () => {
         ref={imageRef}
         className="absolute inset-[-100px] z-0 will-change-transform"
       >
+        {/* Desktop Video - 16:9 */}
         <video
           src="/videos/hero2.mp4"
           autoPlay
           muted
           loop
           playsInline
-          className="w-full h-full object-cover scale-110"
+          className="hidden sm:block w-full h-full object-cover scale-110"
+        />
+        
+        {/* Mobile Video - 9:16 */}
+        <video
+          src="/videos/hero2-mobile.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="block sm:hidden w-full h-full object-cover scale-110"
         />
         {/* Dark overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/40" />
@@ -111,31 +122,31 @@ const Cinematic = () => {
 
         {/* Main title - Movie poster style */}
         <h2 className="reveal-text museo-headline text-white text-5xl md:text-7xl lg:text-8xl text-center leading-[0.9] tracking-tight mb-6">
-          <span className="block">THE</span>
-          <span className="block text-white/90">DESK</span>
+          <span className="inline sm:block">THE </span>
+          <span className="inline sm:block text-white/90">DESK</span>
         </h2>
 
         {/* Tagline */}
-        <p className="reveal-text museo-body text-white/50 text-lg md:text-xl tracking-[0.2em] uppercase mb-12">
+        <p className="reveal-text museo-body text-white/50 text-lg md:text-xl tracking-[0.2em] uppercase mb-12 text-center">
           Organize. Create. Conquer.
         </p>
 
         {/* Feature highlights - Movie credits style */}
-        <div className="reveal-text grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-16 max-w-4xl">
+        <div className="reveal-text grid grid-cols-3 gap-4 md:gap-16 max-w-4xl">
           <div className="text-center">
-            <Focus className="w-8 h-8 text-white/40 mx-auto mb-4" strokeWidth={1} />
-            <p className="museo-label text-white/30 text-xs tracking-widest uppercase mb-2">Precision</p>
-            <p className="museo-headline text-white text-lg">0.01mm</p>
+            <Focus className="w-5 h-5 md:w-8 md:h-8 text-white/40 mx-auto mb-2 md:mb-4" strokeWidth={1} />
+            <p className="museo-label text-white/30 text-[10px] md:text-xs tracking-widest uppercase mb-1 md:mb-2">Precision</p>
+            <p className="museo-headline text-white text-sm md:text-lg">0.01mm</p>
           </div>
           <div className="text-center">
-            <Sparkles className="w-8 h-8 text-white/40 mx-auto mb-4" strokeWidth={1} />
-            <p className="museo-label text-white/30 text-xs tracking-widest uppercase mb-2">Materials</p>
-            <p className="museo-headline text-white text-lg">Aircraft Al</p>
+            <Sparkles className="w-5 h-5 md:w-8 md:h-8 text-white/40 mx-auto mb-2 md:mb-4" strokeWidth={1} />
+            <p className="museo-label text-white/30 text-[10px] md:text-xs tracking-widest uppercase mb-1 md:mb-2">Materials</p>
+            <p className="museo-headline text-white text-sm md:text-lg">Aircraft Al</p>
           </div>
           <div className="text-center">
-            <Clapperboard className="w-8 h-8 text-white/40 mx-auto mb-4" strokeWidth={1} />
-            <p className="museo-label text-white/30 text-xs tracking-widest uppercase mb-2">Crafted</p>
-            <p className="museo-headline text-white text-lg">Germany</p>
+            <Clapperboard className="w-5 h-5 md:w-8 md:h-8 text-white/40 mx-auto mb-2 md:mb-4" strokeWidth={1} />
+            <p className="museo-label text-white/30 text-[10px] md:text-xs tracking-widest uppercase mb-1 md:mb-2">Crafted</p>
+            <p className="museo-headline text-white text-sm md:text-lg">Germany</p>
           </div>
         </div>
 

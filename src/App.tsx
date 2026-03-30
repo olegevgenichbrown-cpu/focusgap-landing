@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, lazy, Suspense } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './App.css';
@@ -13,20 +13,25 @@ import useCustomCursor from './hooks/useCustomCursor';
 // Components
 import Preloader from './components/Preloader';
 
-// Sections
+// Critical Sections (load immediately)
 import Hero from './sections/Hero';
 import Cinematic from './sections/Cinematic';
-import About from './sections/About';
-import Manufacturing from './sections/Manufacturing';
-import Magnetic from './sections/Magnetic';
-import Specs from './sections/Specs';
-import Collections from './sections/Collections';
-import Timeline from './sections/Timeline';
-import Pricing from './sections/Pricing';
-import FAQ from './sections/FAQ';
-import Testimonials from './sections/Testimonials';
-import Visit from './sections/Visit';
-import Footer from './sections/Footer';
+
+// Lazy load non-critical sections
+const About = lazy(() => import('./sections/About'));
+const Manufacturing = lazy(() => import('./sections/Manufacturing'));
+const Magnetic = lazy(() => import('./sections/Magnetic'));
+const Specs = lazy(() => import('./sections/Specs'));
+const Collections = lazy(() => import('./sections/Collections'));
+const Timeline = lazy(() => import('./sections/Timeline'));
+const Pricing = lazy(() => import('./sections/Pricing'));
+const FAQ = lazy(() => import('./sections/FAQ'));
+const Testimonials = lazy(() => import('./sections/Testimonials'));
+const Visit = lazy(() => import('./sections/Visit'));
+const Footer = lazy(() => import('./sections/Footer')); 
+
+// Simple loading placeholder
+const SectionLoader = () => <div className="min-h-[50vh] bg-[#050505]" />;
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -129,40 +134,40 @@ function App() {
         <Cinematic />
 
         {/* About/Mission Section */}
-        <About />
+        <Suspense fallback={<SectionLoader />}><About /></Suspense>
 
         {/* Manufacturing Section with GIFs */}
-        <Manufacturing />
+        <Suspense fallback={<SectionLoader />}><Manufacturing /></Suspense>
 
         {/* Magnetic Connection Section with GIFs */}
-        <Magnetic />
+        <Suspense fallback={<SectionLoader />}><Magnetic /></Suspense>
 
         {/* Tech Specs Section */}
-        <Specs />
+        <Suspense fallback={<SectionLoader />}><Specs /></Suspense>
 
         {/* Product Modules Section */}
-        <Collections />
+        <Suspense fallback={<SectionLoader />}><Collections /></Suspense>
 
         {/* Timeline/Roadmap Section */}
-        <Timeline />
+        <Suspense fallback={<SectionLoader />}><Timeline /></Suspense>
 
         {/* Pricing Section */}
-        <Pricing />
+        <Suspense fallback={<SectionLoader />}><Pricing /></Suspense>
 
         {/* FAQ Section */}
-        <FAQ />
+        <Suspense fallback={<SectionLoader />}><FAQ /></Suspense>
 
         {/* Team/Testimonials Section */}
         <div id="team-section">
-          <Testimonials />
+          <Suspense fallback={<SectionLoader />}><Testimonials /></Suspense>
         </div>
 
         {/* Waitlist/Visit Section */}
-        <Visit />
+        <Suspense fallback={<SectionLoader />}><Visit /></Suspense>
 
         {/* Footer */}
         <div id="footer-section">
-          <Footer />
+          <Suspense fallback={<SectionLoader />}><Footer /></Suspense>
         </div>
       </div>
     </>

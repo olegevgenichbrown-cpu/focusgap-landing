@@ -138,7 +138,7 @@ const Magnetic = () => {
 
       {/* Main Magnetic Showcase */}
       <div ref={showcaseRef} className="max-w-7xl mx-auto mb-24 relative z-10">
-        <div className="magnetic-showcase relative aspect-[21/9] rounded-2xl overflow-hidden bg-gradient-to-br from-[#1a1a1a] to-[#0a0a0a]">
+        <div className="magnetic-showcase relative aspect-[4/3] sm:aspect-[21/9] rounded-2xl overflow-hidden bg-gradient-to-br from-[#1a1a1a] to-[#0a0a0a]">
           {/* Main Video */}
           <video
             src={magneticConfig.mainGif}
@@ -161,8 +161,8 @@ const Magnetic = () => {
             </div>
           </div>
 
-          {/* Floating feature cards */}
-          <div className="absolute bottom-8 left-8 right-8 flex flex-wrap gap-4">
+          {/* Floating feature cards - desktop only */}
+          <div className="absolute bottom-8 left-8 right-8 hidden sm:flex flex-wrap gap-4">
             {magneticConfig.features.map((feature, i) => (
               <div
                 key={i}
@@ -179,6 +179,24 @@ const Magnetic = () => {
             ))}
           </div>
         </div>
+
+        {/* Mobile feature cards - 3 lines below video */}
+        <div className="sm:hidden mt-4 grid grid-cols-1 gap-3">
+          {magneticConfig.features.map((feature, i) => (
+            <div
+              key={i}
+              className="feature-card flex items-center gap-4 px-4 py-3 bg-white/5 backdrop-blur-md rounded-lg border border-white/10"
+            >
+              <div className="text-white/60">
+                {getIcon(feature.icon)}
+              </div>
+              <div>
+                <p className="museo-headline text-white text-sm">{feature.title}</p>
+                <p className="museo-body text-white/40 text-xs">{feature.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* Configuration Variations */}
@@ -186,11 +204,11 @@ const Magnetic = () => {
         <h3 className="museo-headline text-white text-2xl mb-8 text-center">
           Endless Configurations
         </h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {magneticConfig.configurations.map((config, i) => (
             <div
               key={i}
-              className="config-item group relative aspect-video rounded-xl overflow-hidden bg-[#1a1a1a] cursor-pointer"
+              className="config-item group relative rounded-xl overflow-hidden bg-black cursor-pointer" style={{ aspectRatio: '1/1' }}
               data-cursor="hover"
             >
               {config.type === 'video' ? (
@@ -200,13 +218,13 @@ const Magnetic = () => {
                   muted
                   loop
                   playsInline
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  className="w-full h-full object-cover"
                 />
               ) : (
                 <img
                   src={config.image}
                   alt={config.title}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  className="w-full h-full object-cover"
                 />
               )}
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />

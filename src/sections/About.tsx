@@ -8,7 +8,6 @@ gsap.registerPlugin(ScrollTrigger);
 const About = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
-  const galleryRef = useRef<HTMLDivElement>(null);
   const statsRef = useRef<HTMLDivElement>(null);
   const triggersRef = useRef<ScrollTrigger[]>([]);
 
@@ -17,10 +16,9 @@ const About = () => {
   useEffect(() => {
     const section = sectionRef.current;
     const text = textRef.current;
-    const gallery = galleryRef.current;
     const stats = statsRef.current;
 
-    if (!section || !text || !gallery || !stats) return;
+    if (!section || !text || !stats) return;
 
     // Text reveal
     const textElements = text.querySelectorAll('.reveal-text');
@@ -36,44 +34,17 @@ const About = () => {
       triggersRef.current.push(trigger);
     });
 
-
-
-    // Component 8 reveal when second row is in view
-    const component8 = gallery.querySelector('.component8-wrapper');
-    if (component8) {
-      gsap.set(component8, { opacity: 0, y: 40 });
+    // Grid items reveal
+    const gridItems = section.querySelectorAll<HTMLElement>('.grid-item');
+    gridItems.forEach((item, i) => {
+      gsap.set(item, { opacity: 0, y: 30 });
       const trigger = ScrollTrigger.create({
-        trigger: component8,
+        trigger: item,
         start: 'top 90%',
-        end: 'top 60%',
-        scrub: 0.5,
-        onUpdate: (self) => {
-          const progress = self.progress;
-          gsap.set(component8, {
-            opacity: progress,
-            y: 40 * (1 - progress),
-          });
-        },
-      });
-      triggersRef.current.push(trigger);
-    }
-
-    // Gallery images: opacity 0.4 -> 1 + slide up
-    const imgWraps = gallery.querySelectorAll<HTMLElement>('.gallery-img-wrap');
-    imgWraps.forEach((wrap) => {
-      const offset = parseFloat(wrap.dataset.offset || '0');
-      gsap.set(wrap, { opacity: 0.4, y: offset });
-
-      const trigger = ScrollTrigger.create({
-        trigger: wrap,
-        start: 'top 92%',
-        end: 'top 40%',
-        scrub: 0.6,
-        onUpdate: (self) => {
-          const progress = self.progress;
-          gsap.set(wrap, {
-            opacity: 0.4 + progress * 0.6,
-            y: offset * (1 - progress),
+        onEnter: () => {
+          gsap.to(item, {
+            opacity: 1, y: 0, duration: 0.6,
+            delay: i * 0.1, ease: 'power3.out',
           });
         },
       });
@@ -103,10 +74,8 @@ const About = () => {
     };
   }, []);
 
-  // Split gallery images into 3 columns
-  const col1Images = aboutConfig.galleryImages.filter((_, i) => i % 3 === 0);
-  const col2Images = aboutConfig.galleryImages.filter((_, i) => i % 3 === 1);
-  const col3Images = aboutConfig.galleryImages.filter((_, i) => i % 3 === 2);
+  // Get first 6 components for 3x2 grid
+  const gridImages = aboutConfig.galleryImages.slice(0, 6);
 
   return (
     <section
@@ -127,97 +96,53 @@ const About = () => {
         </p>
       </div>
 
-      {/* Gallery — overflow hidden to prevent parallax leaking into stats */}
-      <div className="overflow-hidden">
-        <div ref={galleryRef} className="relative max-w-7xl mx-auto px-4 lg:px-8 pb-16">
-          <div className="grid grid-cols-3 gap-4 lg:gap-5">
-
-            {/* Column 1 */}
-            <div className="gallery-col space-y-4 lg:space-y-5 will-change-transform">
-              {col1Images.map((img, i) => (
-                <div key={i} className="gallery-img-wrap overflow-hidden will-change-transform" data-offset={i === 0 ? "60" : "120"}>
-                  {img.type === 'video' ? (
-                    <video 
-                      src={img.src} 
-                      autoPlay 
-                      muted 
-                      loop 
-                      playsInline
-                      className="w-full h-auto object-cover bg-black"
-                      style={{ aspectRatio: i === 0 ? '3/4' : '4/5' }}
-                    />
-                  ) : (
-                    <img src={img.src} alt={img.alt} className="w-full h-auto object-cover" style={{ aspectRatio: i === 0 ? '3/4' : '4/5' }} />
-                  )}
-                  <p className="museo-label text-white/25 mt-3 text-[10px]">{img.label}</p>
-                </div>
-              ))}
-            </div>
-
-            {/* Column 2 */}
-            <div className="gallery-col space-y-4 lg:space-y-5 will-change-transform pt-0">
-              {col2Images.map((img, i) => (
-                <div key={i} className="gallery-img-wrap overflow-hidden will-change-transform" data-offset={i === 0 ? "80" : "160"}>
-                  {img.type === 'video' ? (
-                    <video 
-                      src={img.src} 
-                      autoPlay 
-                      muted 
-                      loop 
-                      playsInline
-                      className="w-full h-auto object-cover bg-black"
-                      style={{ aspectRatio: '3/4' }}
-                    />
-                  ) : (
-                    <img src={img.src} alt={img.alt} className="w-full h-auto object-cover" style={{ aspectRatio: '3/4' }} />
-                  )}
-                  <p className="museo-label text-white/25 mt-3 text-[10px]">{img.label}</p>
-                </div>
-              ))}
-            </div>
-
-            {/* Column 3 */}
-            <div className="gallery-col space-y-4 lg:space-y-5 will-change-transform">
-              {col3Images.map((img, i) => (
-                <div key={i} className="gallery-img-wrap overflow-hidden will-change-transform" data-offset={i === 0 ? "40" : "140"}>
-                  {img.type === 'video' ? (
-                    <video 
-                      src={img.src} 
-                      autoPlay 
-                      muted 
-                      loop 
-                      playsInline
-                      className="w-full h-auto object-cover bg-black"
-                      style={{ aspectRatio: i === 0 ? '4/5' : '3/4' }}
-                    />
-                  ) : (
-                    <img src={img.src} alt={img.alt} className="w-full h-auto object-cover" style={{ aspectRatio: i === 0 ? '4/5' : '3/4' }} />
-                  )}
-                  <p className="museo-label text-white/25 mt-3 text-[10px]">{img.label}</p>
-                </div>
-              ))}
-            </div>
+      {/* Gallery Container */}
+      <div className="max-w-7xl mx-auto px-4 lg:px-8 pb-16 space-y-6">
+        
+        {/* Component 8 — Full Width Hero */}
+        <div className="grid-item w-full">
+          <div className="overflow-hidden rounded-xl bg-black">
+            <video
+              src="/videos/component8.mp4"
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="w-full h-auto object-cover aspect-[4/3] sm:aspect-video"
+            />
           </div>
+          <p className="museo-label text-white/25 mt-3 text-[10px] uppercase tracking-wider">Complete Setup</p>
+        </div>
 
-          {/* Component 8 — full width video, appears after columns align */}
-          <div className="component8-wrapper mt-8 lg:mt-12 w-full opacity-0">
-            <div className="overflow-hidden rounded-sm">
-              <video
-                src="/videos/component8.mp4"
-                autoPlay
-                muted
-                loop
-                playsInline
-                className="w-full h-auto object-contain bg-black"
-                style={{ aspectRatio: '16/9' }}
-              />
+        {/* Components Grid — 3x2, all 1:1 square */}
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5">
+          {gridImages.map((img, i) => (
+            <div key={i} className="grid-item overflow-hidden rounded-xl bg-black">
+              <div className="relative" style={{ aspectRatio: '1/1' }}>
+                {img.type === 'video' ? (
+                  <video 
+                    src={img.src} 
+                    autoPlay 
+                    muted 
+                    loop 
+                    playsInline
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
+                ) : (
+                  <img 
+                    src={img.src} 
+                    alt={img.alt} 
+                    className="absolute inset-0 w-full h-full object-cover" 
+                  />
+                )}
+              </div>
+              <p className="museo-label text-white/25 mt-3 text-[10px] uppercase tracking-wider">{img.label}</p>
             </div>
-            <p className="museo-label text-white/25 mt-3 text-[10px]">Component 8</p>
-          </div>
+          ))}
         </div>
       </div>
 
-      {/* Stats — z-index above gallery to prevent overlap */}
+      {/* Stats */}
       {aboutConfig.stats.length > 0 && (
         <div ref={statsRef} className="relative z-10 max-w-7xl mx-auto px-8 lg:px-16 py-24 bg-[#050505]">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 border-t border-white/10 pt-12">

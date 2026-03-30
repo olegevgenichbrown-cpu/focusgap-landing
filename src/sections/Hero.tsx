@@ -122,6 +122,7 @@ const Hero = () => {
           onLoadedData={() => setIsLoaded(true)}
           className={`w-full h-full object-cover transition-all duration-1000 ${isLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-105'}`}
         >
+          <source src="/videos/hero-mobile.mp4" type="video/mp4" media="(max-width: 640px)" />
           <source src="/videos/hero-video.mp4" type="video/mp4" />
         </video>
         {/* Cinematic dark overlay */}
@@ -166,10 +167,10 @@ const Hero = () => {
         </button>
       </nav>
 
-      {/* Main Content with parallax */}
+      {/* Desktop Content - centered */}
       <div
         ref={contentRef}
-        className="relative flex flex-col items-center justify-center h-full px-6 text-center"
+        className="hidden sm:flex relative flex-col items-center justify-center h-full px-6 text-center"
         style={{
           transform: `translate(${mousePos.x * -0.2}px, ${mousePos.y * -0.2}px)`,
           transition: 'transform 0.5s ease-out',
@@ -234,6 +235,57 @@ const Hero = () => {
         {/* Year */}
         <div className="hero-text absolute bottom-24 right-8 lg:right-16">
           <p className="museo-label text-white/30 text-[10px] tracking-widest">{heroConfig.since}</p>
+        </div>
+      </div>
+
+      {/* Mobile Content - stretched vertically */}
+      <div
+        className="flex sm:hidden relative flex-col h-full px-6 text-center pt-24 pb-4"
+        style={{
+          transform: `translate(${mousePos.x * -0.2}px, ${mousePos.y * -0.2}px)`,
+          transition: 'transform 0.5s ease-out',
+        }}
+      >
+        {/* Badge at top */}
+        <div className="hero-text">
+          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-white/80 text-[10px] tracking-widest uppercase">
+            <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
+            {heroConfig.badge}
+          </span>
+        </div>
+
+        {/* Main content - centered with flex-1 */}
+        <div className="flex-1 flex flex-col justify-center">
+          <h1 className="hero-text museo-headline text-white text-[12vw] leading-[0.85] tracking-tight mb-4">
+            <span className="inline-block">{heroConfig.brandLeft}</span>
+            <span className="inline-block text-white/30 mx-2">/</span>
+            <span className="inline-block">{heroConfig.brandRight}</span>
+          </h1>
+          <p className="hero-text museo-body text-white/50 text-base max-w-xl leading-relaxed tracking-wide px-4">
+            {heroConfig.tagline}
+          </p>
+        </div>
+
+        {/* Buttons at bottom */}
+        <div className="hero-text flex flex-row items-center justify-center gap-3 relative -top-24">
+          <a
+            href="#waitlist"
+            className="group relative inline-flex items-center gap-2 px-6 py-3 bg-white text-[#050505] museo-label text-xs overflow-hidden transition-all"
+            data-cursor="hover"
+          >
+            <span className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500" />
+            <span className="relative flex items-center gap-2">
+              <Play className="w-3 h-3" />
+              Join Waitlist
+            </span>
+          </a>
+          <a
+            href="#modules"
+            className="inline-flex items-center gap-2 px-6 py-3 border border-white/30 text-white museo-label text-xs hover:bg-white/10 transition-all"
+            data-cursor="hover"
+          >
+            Explore
+          </a>
         </div>
       </div>
 

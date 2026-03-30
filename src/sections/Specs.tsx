@@ -113,13 +113,13 @@ const Specs = () => {
           </div>
 
           {/* Specs Grid */}
-          <div ref={specsRef} className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div ref={specsRef} className="grid grid-cols-2 gap-3 sm:gap-6">
             {specsConfig.specs.map((spec, i) => {
               const IconComponent = iconMap[spec.icon];
               return (
                 <div
                   key={i}
-                  className="spec-item group relative p-6 rounded-xl bg-white/[0.03] border border-white/10 hover:bg-white/[0.06] hover:border-white/20 transition-all duration-500 cursor-pointer"
+                  className="spec-item group relative p-4 sm:p-6 rounded-xl bg-white/[0.03] border border-white/10 hover:bg-white/[0.06] hover:border-white/20 transition-all duration-500 cursor-pointer"
                   onMouseEnter={() => setHoveredSpec(i)}
                   onMouseLeave={() => setHoveredSpec(null)}
                   data-cursor="hover"
@@ -128,14 +128,14 @@ const Specs = () => {
                   <div className={`absolute inset-0 rounded-xl bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
                   
                   <div className="relative z-10">
-                    <div className="w-12 h-12 rounded-lg bg-white/5 flex items-center justify-center text-white/40 group-hover:text-white group-hover:bg-white/10 transition-all duration-500 mb-4">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-white/5 flex items-center justify-center text-white/40 group-hover:text-white group-hover:bg-white/10 transition-all duration-500 mb-3 sm:mb-4">
                       {IconComponent && <IconComponent className="w-5 h-5" strokeWidth={1.5} />}
                     </div>
                     
                     <p className="museo-label text-white/40 text-xs tracking-wider uppercase mb-2">
                       {spec.label}
                     </p>
-                    <p className="museo-headline text-white text-xl group-hover:text-white transition-colors">
+                    <p className="museo-headline text-white text-base sm:text-xl group-hover:text-white transition-colors">
                       {spec.value}
                     </p>
                     
