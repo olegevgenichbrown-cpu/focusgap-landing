@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, lazy, Suspense } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './App.css';
@@ -13,25 +13,14 @@ import useCustomCursor from './hooks/useCustomCursor';
 // Components
 import Preloader from './components/Preloader';
 
-// Critical Sections (load immediately)
+// Sections
 import Hero from './sections/Hero';
-import Cinematic from './sections/Cinematic';
-
-// Lazy load non-critical sections
-const About = lazy(() => import('./sections/About'));
-const Manufacturing = lazy(() => import('./sections/Manufacturing'));
-const Magnetic = lazy(() => import('./sections/Magnetic'));
-const Specs = lazy(() => import('./sections/Specs'));
-const Collections = lazy(() => import('./sections/Collections'));
-const Timeline = lazy(() => import('./sections/Timeline'));
-const Pricing = lazy(() => import('./sections/Pricing'));
-const FAQ = lazy(() => import('./sections/FAQ'));
-const Testimonials = lazy(() => import('./sections/Testimonials'));
-const Visit = lazy(() => import('./sections/Visit'));
-const Footer = lazy(() => import('./sections/Footer')); 
-
-// Simple loading placeholder
-const SectionLoader = () => <div className="min-h-[50vh] bg-[#050505]" />;
+import Problem from './sections/Problem';
+import Features from './sections/Features';
+import CTAMid from './sections/CTAMid';
+import FounderStory from './sections/FounderStory';
+import FinalCTA from './sections/FinalCTA';
+import Footer from './sections/Footer';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -40,13 +29,9 @@ function App() {
   const triggersRef = useRef<ScrollTrigger[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Initialize smooth scroll
   useLenis();
-
-  // Initialize custom cursor
   useCustomCursor();
 
-  // Set document language
   useEffect(() => {
     if (siteConfig.language) {
       document.documentElement.lang = siteConfig.language;
@@ -57,20 +42,13 @@ function App() {
   }, []);
 
   useEffect(() => {
-    // Background color transitions based on sections
     const sections = [
       { selector: '#hero-section', color: '#020202' },
-      { selector: '#cinematic', color: '#020202' },
-      { selector: '#mission', color: '#050505' },
-      { selector: '#manufacturing', color: '#0a0a0a' },
-      { selector: '#magnetic', color: '#050505' },
-      { selector: '#specs', color: '#050505' },
-      { selector: '#modules', color: '#f0f0f0' },
-      { selector: '#timeline', color: '#0a0a0a' },
-      { selector: '#pricing', color: '#0a0a0a' },
-      { selector: '#faq', color: '#050505' },
-      { selector: '#team', color: '#8c8c91' },
-      { selector: '#waitlist', color: '#050505' },
+      { selector: '#problem', color: '#050505' },
+      { selector: '#features', color: '#050505' },
+      { selector: '#cta-mid', color: '#050505' },
+      { selector: '#founder', color: '#050505' },
+      { selector: '#final-cta', color: '#0a0a0a' },
       { selector: '#footer-section', color: '#050505' },
     ];
 
@@ -108,7 +86,6 @@ function App() {
 
   const handlePreloaderComplete = () => {
     setIsLoading(false);
-    // Animate main content entrance
     gsap.fromTo(
       mainRef.current,
       { opacity: 0 },
@@ -118,56 +95,21 @@ function App() {
 
   return (
     <>
-
-
-      {/* Preloader */}
       {isLoading && <Preloader onComplete={handlePreloaderComplete} />}
 
-      {/* Main Content */}
       <div ref={mainRef} className="relative" style={{ opacity: isLoading ? 0 : 1 }}>
-        {/* Hero Section - Full Screen Video */}
         <div id="hero-section">
           <Hero />
         </div>
 
-        {/* Cinematic Experience Section */}
-        <Cinematic />
+        <Problem />
+        <Features />
+        <CTAMid />
+        <FounderStory />
+        <FinalCTA />
 
-        {/* About/Mission Section */}
-        <Suspense fallback={<SectionLoader />}><About /></Suspense>
-
-        {/* Manufacturing Section with GIFs */}
-        <Suspense fallback={<SectionLoader />}><Manufacturing /></Suspense>
-
-        {/* Magnetic Connection Section with GIFs */}
-        <Suspense fallback={<SectionLoader />}><Magnetic /></Suspense>
-
-        {/* Tech Specs Section */}
-        <Suspense fallback={<SectionLoader />}><Specs /></Suspense>
-
-        {/* Product Modules Section */}
-        <Suspense fallback={<SectionLoader />}><Collections /></Suspense>
-
-        {/* Timeline/Roadmap Section */}
-        <Suspense fallback={<SectionLoader />}><Timeline /></Suspense>
-
-        {/* Pricing Section */}
-        <Suspense fallback={<SectionLoader />}><Pricing /></Suspense>
-
-        {/* FAQ Section */}
-        <Suspense fallback={<SectionLoader />}><FAQ /></Suspense>
-
-        {/* Team/Testimonials Section */}
-        <div id="team-section">
-          <Suspense fallback={<SectionLoader />}><Testimonials /></Suspense>
-        </div>
-
-        {/* Waitlist/Visit Section */}
-        <Suspense fallback={<SectionLoader />}><Visit /></Suspense>
-
-        {/* Footer */}
         <div id="footer-section">
-          <Suspense fallback={<SectionLoader />}><Footer /></Suspense>
+          <Footer />
         </div>
       </div>
     </>
