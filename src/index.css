@@ -63,38 +63,36 @@
   }
   
   body {
-    @apply bg-[#8c8c91] text-white antialiased;
-    font-family: 'Inter', sans-serif;
+    @apply bg-background text-foreground;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     overflow-x: hidden;
-    cursor: none;
-  }
-  
-  ::selection {
-    background: rgba(255, 255, 255, 0.3);
-    color: inherit;
   }
 }
 
 @layer components {
+  /* Museo-style typography */
   .museo-headline {
-    @apply font-semibold tracking-tight leading-none;
     font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
   }
   
   .museo-body {
-    @apply font-light leading-relaxed;
-    line-height: 1.7;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 1.6;
   }
   
   .museo-label {
-    @apply text-xs uppercase tracking-widest font-medium;
-    letter-spacing: 0.2em;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
   }
-  
-  .border-museo {
-    border-color: rgba(255, 255, 255, 0.2);
-  }
-  
+
+  /* Clip path reveal animation */
   .clip-reveal {
     clip-path: inset(0 0 100% 0);
   }
@@ -127,7 +125,8 @@
   }
 }
 
-/* Custom cursor styles */
+/* Custom cursor styles - DISABLED for performance */
+/*
 .custom-cursor {
   position: fixed;
   width: 12px;
@@ -145,6 +144,7 @@
   width: 40px;
   height: 40px;
 }
+*/
 
 /* Marquee animation */
 @keyframes marquee {
@@ -220,8 +220,171 @@
   height: 100vh;
 }
 
-/* Hide default scrollbar for cleaner look */
-::-webkit-scrollbar {
+/* ============== HOVER EFFECTS ============== */
+
+/* Button hover glow effect */
+.btn-glow {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.btn-glow::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+  border-radius: inherit;
+}
+
+.btn-glow:hover::before {
+  opacity: 1;
+}
+
+.btn-glow:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 40px -10px rgba(255,255,255,0.3);
+}
+
+.btn-glow:active {
+  transform: translateY(0);
+}
+
+/* Magnetic button effect */
+.btn-magnetic {
+  transition: transform 0.2s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.btn-magnetic:hover {
+  transform: scale(1.02);
+}
+
+/* Card lift effect */
+.card-hover {
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.card-hover:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px -15px rgba(0,0,0,0.5);
+}
+
+/* Link underline animation */
+.link-underline {
+  position: relative;
+}
+
+.link-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
   width: 0;
+  height: 1px;
+  background: currentColor;
+  transition: width 0.3s ease;
+}
+
+.link-underline:hover::after {
+  width: 100%;
+}
+
+/* Image zoom on hover */
+.img-zoom {
+  overflow: hidden;
+}
+
+.img-zoom img,
+.img-zoom video {
+  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.img-zoom:hover img,
+.img-zoom:hover video {
+  transform: scale(1.05);
+}
+
+/* Border glow animation */
+@keyframes borderGlow {
+  0%, 100% {
+    border-color: rgba(255,255,255,0.1);
+  }
+  50% {
+    border-color: rgba(255,255,255,0.3);
+  }
+}
+
+.border-glow:hover {
+  animation: borderGlow 2s ease-in-out infinite;
+}
+
+/* Shimmer effect for buttons */
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.btn-shimmer {
+  background: linear-gradient(
+    90deg,
+    white 0%,
+    white 40%,
+    rgba(255,255,255,0.8) 50%,
+    white 60%,
+    white 100%
+  );
+  background-size: 200% 100%;
+}
+
+.btn-shimmer:hover {
+  animation: shimmer 1.5s ease-in-out;
+}
+
+/* Pulse ring effect */
+@keyframes pulseRing {
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+.pulse-ring::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1px solid currentColor;
+  animation: pulseRing 2s ease-out infinite;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
   background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.2);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255,255,255,0.3);
+}
+
+/* Selection */
+::selection {
+  background: rgba(255,255,255,0.2);
+  color: white;
 }

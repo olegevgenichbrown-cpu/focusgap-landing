@@ -4,7 +4,7 @@ node_modules
 .pnp.js
 
 # Build output (we'll commit dist for Netlify, or use Netlify build command)
-# dist
+dist
 
 # Local env files
 .env
